@@ -10,12 +10,12 @@ AUTHOR = "Maxime Guilbot"
 EMAIL  = "maxime [a] ekohe [d] com"
 GEM_NAME = "dm-is-taggable"
 GEM_VERSION = DataMapper::Is::Taggable::VERSION
-GEM_DEPENDENCIES = [["dm-core", GEM_VERSION], ["dm-is-remixable", ">=0.9.8"]]
+GEM_DEPENDENCIES = [["dm-core", '>=0.9.12'], ["dm-is-remixable", ">=0.9.12"]]
 GEM_CLEAN = ["log", "pkg"]
 GEM_EXTRAS = { :has_rdoc => true, :extra_rdoc_files => %w[ README.txt LICENSE TODO ] }
 
 PROJECT_NAME = "dm-is-taggable"
-PROJECT_URL  = "http://github.com/maxime/dm-is-taggable/wikis"
+PROJECT_URL  = "http://github.com/snusnu/dm-is-taggable"
 PROJECT_DESCRIPTION = PROJECT_SUMMARY = "Taggable of a DataMapper plugin"
 
 require 'tasks/hoe'

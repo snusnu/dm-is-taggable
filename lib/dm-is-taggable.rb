@@ -3,16 +3,20 @@ require 'rubygems'
 require 'pathname'
 
 # Add all external dependencies for the plugin here
-gem 'dm-core', '=0.9.9'
+gem 'dm-core', '>=0.9.12'
 require 'dm-core'
 
+gem 'dm-is-remixable', '>=0.9.12'
 require 'dm-is-remixable'
 
 # Require plugin-files
-require Pathname(__FILE__).dirname.expand_path / 'dm-is-taggable' / 'is' / 'taggable.rb'
-require Pathname(__FILE__).dirname.expand_path / 'dm-is-taggable' / 'is' / 'tag.rb'
-require Pathname(__FILE__).dirname.expand_path / 'dm-is-taggable' / 'is' / 'tagging.rb'
-require Pathname(__FILE__).dirname.expand_path / 'dm-is-taggable' / 'is' / 'tagger.rb'
+
+dir = Pathname(__FILE__).dirname.expand_path / 'dm-is-taggable' / 'is'
+
+require dir / 'taggable.rb'
+require dir / 'tag.rb'
+require dir / 'tagging.rb'
+require dir / 'tagger.rb'
 
 # Include the plugin in Resource
 module DataMapper
