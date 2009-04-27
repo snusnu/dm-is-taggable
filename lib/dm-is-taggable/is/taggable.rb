@@ -40,12 +40,17 @@ module DataMapper
             #{taggers_associations}
           end
           
-          has n, :tags, :through => :#{Extlib::Inflection.underscore(self.to_s)}_tags
+          has n, :tags,
+            :through => :#{Extlib::Inflection.underscore(self.to_s)}_tags,
+            :constraint => :destroy
         RUBY
         
         Tag.class_eval <<-RUBY
-          has n, :#{Extlib::Inflection.underscore(self.to_s)}_tags
-          has n, :#{Extlib::Inflection.underscore(self.to_s).pluralize}, :through => :#{Extlib::Inflection.underscore(self.to_s)}_tags
+          has n, :#{Extlib::Inflection.underscore(self.to_s)}_tags,
+            :constraint => :destroy
+          has n, :#{Extlib::Inflection.underscore(self.to_s).pluralize},
+            :through => :#{Extlib::Inflection.underscore(self.to_s)}_tags,
+            :constraint => :destroy
         RUBY
         
         options[:by].each do |tagger_class|

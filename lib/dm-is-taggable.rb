@@ -6,6 +6,9 @@ require 'pathname'
 gem 'dm-core', '>=0.9.12'
 require 'dm-core'
 
+gem 'dm-constraints', '>=0.9.12'
+require 'dm-constraints'
+
 gem 'dm-is-remixable', '>=0.9.12'
 require 'dm-is-remixable'
 

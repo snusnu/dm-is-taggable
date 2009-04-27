@@ -10,7 +10,11 @@ AUTHOR = "Maxime Guilbot"
 EMAIL  = "maxime [a] ekohe [d] com"
 GEM_NAME = "dm-is-taggable"
 GEM_VERSION = DataMapper::Is::Taggable::VERSION
-GEM_DEPENDENCIES = [["dm-core", '>=0.9.12'], ["dm-is-remixable", ">=0.9.12"]]
+GEM_DEPENDENCIES = [
+  ["dm-core", '>=0.9.12'],
+  ["dm-constraints", ">=0.9.12"],
+  ["dm-is-remixable", ">=0.9.12"]
+]
 GEM_CLEAN = ["log", "pkg"]
 GEM_EXTRAS = { :has_rdoc => true, :extra_rdoc_files => %w[ README.txt LICENSE TODO ] }
 

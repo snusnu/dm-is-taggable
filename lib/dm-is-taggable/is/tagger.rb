@@ -40,8 +40,11 @@ module DataMapper
         def add_taggable_object_classes(taggable_object_classes)
           taggable_object_classes.each do |taggable_object_class|
             self.taggable_object_classes << taggable_object_class
-            self.has n, "#{taggable_object_class.storage_name.singular}_tags".intern
-            self.has n, taggable_object_class.storage_name.intern, :through => "#{taggable_object_class.storage_name.singular}_tags".intern
+            self.has n, "#{taggable_object_class.storage_name.singular}_tags".intern,
+              :constraint => :destroy
+            self.has n, taggable_object_class.storage_name.intern,
+              :through => "#{taggable_object_class.storage_name.singular}_tags".intern,
+              :constraint => :destroy
           end
         end
       end # ClassMethods
