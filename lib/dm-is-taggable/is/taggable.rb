@@ -70,7 +70,7 @@ module DataMapper
           tags = [tags] unless tags.class == Array
           
           # Transform Strings to Tags if necessary
-          tags.collect!{|t| t.class == Tag ? t : Tag.build(t)}
+          tags.collect!{|t| t.class == Tag ? t : Tag.first(:name => t)}.compact!
           
           # Query the objects tagged with those tags
           taggings = Extlib::Inflection::constantize("#{self.to_s}Tag").all(:tag_id.in => tags.collect{|t| t.id})
