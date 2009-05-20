@@ -73,7 +73,7 @@ module DataMapper
           tags.collect!{|t| t.class == Tag ? t : Tag.first(:name => t)}.compact!
           
           # Query the objects tagged with those tags
-          taggings = Extlib::Inflection::constantize("#{self.to_s}Tag").all(:tag_id.in => tags.collect{|t| t.id})
+          taggings = Extlib::Inflection::constantize("#{self.to_s}Tag").all(:tag_id => tags.collect{|t| t.id})
           taggings.collect{|tagging| tagging.send(Extlib::Inflection::underscore(self.to_s)) }
         end
       end # ClassMethods
@@ -88,7 +88,7 @@ module DataMapper
             
             p = Extlib::Inflection::constantize("#{self.class.to_s}Tag").new(:tag => tag_name)
             self.send("#{Extlib::Inflection::underscore(self.class.to_s)}_tags") << p
-            p.save unless self.new_record?
+            p.save unless self.new?
           end
         end
         
