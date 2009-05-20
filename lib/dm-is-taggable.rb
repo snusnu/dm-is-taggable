@@ -15,11 +15,5 @@ require dir / 'tagging.rb'
 require dir / 'tagger.rb'
 
 # Include the plugin in Resource
-module DataMapper
-  module Resource
-    module ClassMethods
-      include DataMapper::Is::Taggable
-      include DataMapper::Is::Tagger
-    end # module ClassMethods
-  end # module Resource
-end # module DataMapper
+DataMapper::Model.append_extensions DataMapper::Is::Taggable
+DataMapper::Model.append_extensions DataMapper::Is::Tagger
