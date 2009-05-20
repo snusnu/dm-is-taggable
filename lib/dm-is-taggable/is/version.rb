@@ -1,7 +1,7 @@
 module DataMapper
   module Is
     module Taggable
-      VERSION = "0.9.12"
+      VERSION = '0.10.0'.freeze
     end
   end
 end
