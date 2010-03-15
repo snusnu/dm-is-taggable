@@ -1,55 +1,45 @@
-require 'rubygems'
-require 'spec'
-require 'spec/rake/spectask'
-require 'pathname'
-
-ROOT = Pathname(__FILE__).dirname.expand_path
-require ROOT + 'lib/dm-is-taggable/is/version'
-
-AUTHOR = "Maxime Guilbot"
-EMAIL  = "maxime [a] ekohe [d] com"
-GEM_NAME = "dm-is-taggable"
-GEM_VERSION = DataMapper::Is::Taggable::VERSION
-GEM_DEPENDENCIES = [
-  ["dm-core",         '>=0.10.0'],
-  ["dm-constraints",  '>=0.10.0'],
-  ["dm-is-remixable", '>=0.10.0']
-]
-GEM_CLEAN = ["log", "pkg"]
-GEM_EXTRAS = { :has_rdoc => true, :extra_rdoc_files => %w[ README.txt LICENSE TODO ] }
-
-PROJECT_NAME = "dm-is-taggable"
-PROJECT_URL  = "http://github.com/snusnu/dm-is-taggable"
-PROJECT_DESCRIPTION = PROJECT_SUMMARY = "Taggable of a DataMapper plugin"
-
-require 'tasks/hoe'
-
-task :default => [ :spec ]
-
-WIN32 = (RUBY_PLATFORM =~ /win32|mingw|cygwin/) rescue nil
-SUDO  = WIN32 ? '' : ('sudo' unless ENV['SUDOLESS'])
-
-desc "Install #{GEM_NAME} #{GEM_VERSION}"
-task :install => [ :package ] do
-  sh "#{SUDO} gem install --local pkg/#{GEM_NAME}-#{GEM_VERSION} --no-update-sources", :verbose => false
+begin
+  # Just in case the bundle was locked
+  # This shouldn't happen in a dev environment but lets be safe
+  require File.expand_path('../../.bundle/environment', __FILE__)
+rescue LoadError
+  require 'rubygems'
+  require 'bundler'
+  Bundler.setup
 end
 
-desc "Uninstall #{GEM_NAME} #{GEM_VERSION} (default ruby)"
-task :uninstall => [ :clobber ] do
-  sh "#{SUDO} gem uninstall #{GEM_NAME} -v#{GEM_VERSION} -I -x", :verbose => false
-end
+Bundler.require(:default, :development)
 
-desc 'Run specifications'
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.spec_opts << '--options' << 'spec/spec.opts' if File.exists?('spec/spec.opts')
-  t.spec_files = Pathname.glob((ROOT + 'spec/**/*_spec.rb').to_s)
-  
-  begin
-    t.rcov = ENV.has_key?('NO_RCOV') ? ENV['NO_RCOV'] != 'true' : true
-    t.rcov_opts << "--exclude 'config,spec,#{Gem::path.join(',')}'"
-    t.rcov_opts << '--text-summary'
-    t.rcov_opts << '--sort' << 'coverage' << '--sort-reverse'
-  rescue Exception
-    # rcov not installed
+
+begin
+
+  require 'rake'
+  require 'jeweler'
+
+  Jeweler::Tasks.new do |gem|
+
+    gem.name        = 'dm-is-taggable'
+    gem.summary     = 'Tagging plugin for datamapper'
+    gem.description = 'DataMapper plugin that adds the possibility to tag models'
+    gem.email       = 'gamsnjaga@gmail.com'
+    gem.homepage    = 'http://github.com/snusnu/dm-is-taggable'
+    gem.authors     = [ 'Maxime Guilbot', 'Martin Gamsjaeger (snusnu)' ]
+
+    gem.add_dependency 'dm-core',           '~> 0.10.2'
+    gem.add_dependency 'dm-constraints',    '~> 0.10.2'
+    gem.add_dependency 'dm-is-remixable',   '~> 0.10.2'
+
+    gem.add_development_dependency 'rspec', '~> 1.3'
+    gem.add_development_dependency 'yard',  '~> 0.5'
+
   end
+
+  Jeweler::GemcutterTasks.new
+
+  FileList['tasks/**/*.rake'].each { |task| import task }
+
+rescue LoadError => e
+  puts 'Jeweler (or a dependency) not available. Install it with: gem install jeweler'
+  puts e.message
+  puts e.backtrace
 end
