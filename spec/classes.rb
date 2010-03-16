@@ -19,8 +19,8 @@ class Book
   include DataMapper::Resource
   
   property :id, Serial
-  property :isbn, String, :length => 13, :nullable => false
-  property :title, String, :nullable => false
+  property :isbn, String, :length => 13, :required => true
+  property :title, String, :required => true
   property :author, String
   
   is :taggable, :by => [User]
