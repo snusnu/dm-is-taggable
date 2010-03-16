@@ -57,10 +57,10 @@ module DataMapper
           tags = [tags] if tags.class != Array
           
           tags.each do |tag|
-            join_row_class = Extlib::Inflection::constantize("#{object.class.to_s}Tag")
+            join_row_class = ActiveSupport::Inflector::constantize("#{object.class.to_s}Tag")
             join_row = join_row_class.new(:tag => tag,
-                                          Extlib::Inflection::underscore(self.class.to_s).intern => self)
-            object.send("#{Extlib::Inflection::underscore(object.class.to_s)}_tags") << join_row
+                                          ActiveSupport::Inflector::underscore(self.class.to_s).intern => self)
+            object.send("#{ActiveSupport::Inflector::underscore(object.class.to_s)}_tags") << join_row
             join_row.save
           end
         end
